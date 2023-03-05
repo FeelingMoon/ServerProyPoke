@@ -171,7 +171,6 @@ public class MovimientosDTO implements Serializable {
 	 * @return values of the attributes movement object
 	 */
 	public String toString() {
-		return "MovimientosDTO [num=" + num + ", pp=" + pp + ", power=" + power + ", name=" + name + ", type=" + type
-				+ ", categoryURL=" + categoryURL + ", accuracy=" + accuracy + "]";
+		return num + "-" + pp + "-" + power + "-" + name + "-" + type + "-" + categoryURL + "-" + accuracy;
 	}
 }

@@ -451,9 +451,13 @@ public class PokemonDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return num + "-" + hp + "-" + attack + "-" + defense + "-" + spAtk + "-" + spDef + "-" + speed + "-" + mov1
-				+ "-" + mov2 + "-" + mov3 + "-" + mov4 + "-" + mote + "-" + nom + "-" + type1 + "-" + type2 + "-" + desc
-				+ "-" + hab1 + "-" + hab2 + "-" + hab3 + "-" + gif + "-" + wav;
+		return num + "-" + hp + "-" + attack + "-" + defense + "-" + spAtk + "-" + spDef + "-" + speed + "?&" + mov1
+				+ "?&" + mov2 + "?&" + mov3 + "?&" + mov4 + "?&" + mote + "-" + nom + "-" + type1 + "-" + type2 + "-"
+				+ desc + "-" + hab1 + "-" + hab2 + "-" + hab3 + "-" + gif + "-" + wav;
+	}
+
+	public String toString2() {
+		return num + "-" + nom + "-" + type1 + "-" + type2 + "-" + gif + "-" + wav;
 	}
 
 }

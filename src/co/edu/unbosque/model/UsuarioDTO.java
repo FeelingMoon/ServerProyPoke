@@ -88,22 +88,8 @@ public class UsuarioDTO implements Serializable {
 		return "°error°";
 	}
 
-	public String getPokemonBolsillo() {
-		String tmp = "";
-		ArrayList<PokemonDTO> bolsillo = pokes.get(0);
-		for (int i = 0; i < bolsillo.size(); i++) {
-			tmp += bolsillo.get(i) + "&%&";
-		}
-		return tmp;
-	}
-
-	public String getPokemonCaja(int numero) {
-		String tmp = "";
-		ArrayList<PokemonDTO> bolsillo = pokes.get(numero);
-		for (int i = 0; i < bolsillo.size(); i++) {
-			tmp += bolsillo.get(i) + "&%&";
-		}
-		return tmp;
+	public ArrayList<PokemonDTO> getPokemonArray(int lugar) {
+		return pokes.get(lugar);
 	}
 
 	@Override

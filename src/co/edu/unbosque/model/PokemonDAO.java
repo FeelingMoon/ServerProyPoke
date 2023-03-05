@@ -36,20 +36,6 @@ public class PokemonDAO {
 	}
 
 	/**
-	 * Method that convert the Array in to String
-	 * 
-	 * @return Array coverted
-	 */
-	public String[] getArrayString() {
-		String[] tmp = new String[pokemones.size()];
-		for (int i = 0; i < tmp.length; i++) {
-			PokemonDTO tmpP = pokemones.get(i);
-			tmp[i] = tmpP.getNum() + ". " + tmpP.getNom();
-		}
-		return tmp;
-	}
-
-	/**
 	 * Method that gets the pokemon list using a for Each Loop
 	 * 
 	 * @param numero Number of pokemons
