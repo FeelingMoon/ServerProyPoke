@@ -21,6 +21,7 @@ public class UsuarioDAO {
 
 	public String newUser(String name) {
 		users.add(new UsuarioDTO(name));
+		FileHandler.writeSerializable(users, "users.usr");
 		return "°logro°";
 	}
 
@@ -59,7 +60,9 @@ public class UsuarioDAO {
 			tmp.setMote(mote);
 			for (int i = 0; i < users.size(); i++) {
 				if (users.get(i).getUser().equals(user)) {
-					return users.get(i).capturarPoke(Integer.parseInt(lugar), tmp, mote);
+					String tmpS = users.get(i).capturarPoke(Integer.parseInt(lugar), tmp, mote);
+					FileHandler.writeSerializable(users, "users.usr");
+					return tmpS;
 				}
 			}
 			return "°error°";
@@ -72,7 +75,9 @@ public class UsuarioDAO {
 		try {
 			for (int i = 0; i < users.size(); i++) {
 				if (users.get(i).getUser().equals(user)) {
-					return users.get(i).liberarPoke(Integer.parseInt(lugar), mote);
+					String tmp = users.get(i).liberarPoke(Integer.parseInt(lugar), mote);
+					FileHandler.writeSerializable(users, "users.usr");
+					return tmp;
 				}
 			}
 			return "°error°";
