@@ -8,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import co.edu.unbosque.model.UsuarioDAO;
+import co.edu.unbosque.view.View;
 
 public class HiloServer extends Thread {
 	private Socket socket;
@@ -17,6 +18,7 @@ public class HiloServer extends Thread {
 	private DataOutputStream out;
 	private int port;
 	private UsuarioDAO user;
+	private View vi;
 
 	public HiloServer(int port, UsuarioDAO user) {
 		this.user = user;
@@ -26,7 +28,7 @@ public class HiloServer extends Thread {
 		this.in = null;
 		this.out = null;
 		this.port = port;
-
+		this.vi = new View();
 	}
 
 	@Override
@@ -35,10 +37,10 @@ public class HiloServer extends Thread {
 		while (!line.equals("Over")) {
 			try {
 				this.server = new ServerSocket(this.port);
-				System.out.println("Server started");
-				System.out.println("Waiting for a client ...");
+				vi.mostrarMensaje("Server started");
+				vi.mostrarMensaje("Waiting for a client...");
 				this.socket = server.accept();
-				System.out.println("Client accepted");
+				vi.mostrarMensaje("Client accepted");
 				// takes input from the client socket
 				this.in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 				line = in.readUTF();
@@ -50,18 +52,17 @@ public class HiloServer extends Thread {
 				this.in.close();
 				this.server.close();
 			} catch (IOException i) {
-				System.out.println(i);
+				vi.mostrarMensaje(i.toString());
 				System.exit(0);
 			}
 		}
-		System.out.println("Closing connection");
+		vi.mostrarMensaje("Closing connection");
 
 		try {
 			socket.close();
 			in.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			vi.mostrarMensaje(e.toString());
 		}
 	}
 }
