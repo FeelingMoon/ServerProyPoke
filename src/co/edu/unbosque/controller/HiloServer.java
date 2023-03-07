@@ -61,6 +61,11 @@ public class HiloServer extends Thread {
 				this.server.close();
 			} catch (IOException i) {
 				vi.mostrarMensaje(i.toString());
+				try {
+					socket.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		vi.mostrarMensaje("Closing connection");

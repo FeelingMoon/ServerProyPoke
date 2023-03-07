@@ -157,4 +157,16 @@ public class UsuarioDAO {
 		}
 	}
 
+//	public static void main(String[] args) {
+//		@SuppressWarnings("unchecked")
+//		ArrayList<UsuarioDTO> user = (ArrayList<UsuarioDTO>) FileHandler.loadSerializable("users.usr");
+//		for (int i = 0; i < user.size(); i++) {
+//			if (user.get(i).getUser().equals("true")) {
+//				System.out.println("eliminado");
+//				user.remove(i);
+//				break;
+//			}
+//		}
+//		FileHandler.writeSerializable(user, "users.usr");
+//	}
 }
