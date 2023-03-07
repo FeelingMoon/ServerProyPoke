@@ -34,14 +34,14 @@ public class UsuarioDTO implements Serializable {
 				return tmp.get(i).toString();
 			}
 		}
-		return "°error°";
+		return "error";
 	}
 
 	public String isFullPocket() {
 		if (pokes.get(0).size() == 6) {
-			return "°logro°";
+			return "logro";
 		} else {
-			return "°error°";
+			return "error";
 		}
 	}
 
@@ -63,18 +63,18 @@ public class UsuarioDTO implements Serializable {
 	}
 
 	public String capturarPoke(int lugar, PokemonDTO pokemon, String mote) {
-		if (lugar == 0 && isFullPocket().equals("°logro°")) {
-			return "°error°";
+		if (lugar == 0 && isFullPocket().equals("logro")) {
+			return "error";
 		} else {
 			PokemonDTO pok = pokemon;
-			if (mote.equals("°Nothing°")) {
+			if (mote.equals("Nothing")) {
 				pok.setMote(compMote(pokemon.getNom()));
 			} else {
 				pok.setMote(compMote(mote));
 			}
 			pokes.get(lugar).add(pok);
 		}
-		return "°error°";
+		return "error";
 	}
 
 	public String liberarPoke(int lugar, String nombre) {
@@ -82,10 +82,10 @@ public class UsuarioDTO implements Serializable {
 		for (int i = 0; i < tmp.size(); i++) {
 			if (tmp.get(i).getMote().equalsIgnoreCase(nombre)) {
 				tmp.remove(i);
-				return "°logro°";
+				return "logro";
 			}
 		}
-		return "°error°";
+		return "error";
 	}
 
 	public ArrayList<PokemonDTO> getPokemonArray(int lugar) {

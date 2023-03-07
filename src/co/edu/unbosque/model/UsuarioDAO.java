@@ -22,7 +22,7 @@ public class UsuarioDAO {
 	public String newUser(String name) {
 		users.add(new UsuarioDTO(name));
 		FileHandler.writeSerializable(users, "users.usr");
-		return "°logro°";
+		return "logro";
 	}
 
 	public int[] generateMovs() {
@@ -65,9 +65,9 @@ public class UsuarioDAO {
 					return tmpS;
 				}
 			}
-			return "°error°";
+			return "error";
 		} catch (Exception e) {
-			return "°error°";
+			return "error";
 		}
 	}
 
@@ -80,11 +80,13 @@ public class UsuarioDAO {
 					return tmp;
 				}
 			}
-			return "°error°";
+			return "error";
 		} catch (Exception e) {
-			return "°error°";
+			return "error";
 		}
 	}
+
+	// separacion linea "&%&"
 
 	public String getAllPokes() {
 		ArrayList<PokemonDTO> tmp = pokes.getArrayList();
@@ -115,38 +117,43 @@ public class UsuarioDAO {
 					return tmpS;
 				}
 			}
-			return "°error°";
+			return "error";
 		} catch (Exception e) {
-			return "°error°";
+			return "error";
 		}
 	}
 
 	public String inicioUser(String user) {
 		for (UsuarioDTO us : users) {
 			if (us.getUser().equals(user)) {
-				return "°logro°";
+				return "logro";
 			}
 		}
-		return "°error°";
+		return "error";
 	}
 
+	// separacion "@"
 	public synchronized String doAction(String mensaje) {
-		String accion = mensaje.split("°$°")[0].split("-")[1], user = mensaje.split("°$°")[0].split("-")[0];
-		String info = mensaje.split("°$°")[1];
-		if (accion.equals("iniciar")) {
-			return inicioUser(user);
-		} else if (accion.equals("getAll")) {
-			return getAllPokes();
-		} else if (accion.equals("capturar")) {
-			return captuPoke(info.split("-")[0], info.split("-")[1], user, info.split("-")[2]);
-		} else if (accion.equals("liberar")) {
-			return liberarPoke(user, info.split("-")[0], info.split("-")[1]);
-		} else if (accion.equals("get")) {
-			return getPokes(info, user);
-		} else if (accion.equals("nuevo")) {
-			return newUser(info);
-		} else {
-			return "°error°";
+		try {
+			String accion = mensaje.split("@")[0].split("-")[1], user = mensaje.split("@")[0].split("-")[0];
+			String info = mensaje.split("@")[1];
+			if (accion.equals("iniciar")) {
+				return inicioUser(user);
+			} else if (accion.equals("getAll")) {
+				return getAllPokes();
+			} else if (accion.equals("capturar")) {
+				return captuPoke(info.split("-")[0], info.split("-")[1], user, info.split("-")[2]);
+			} else if (accion.equals("liberar")) {
+				return liberarPoke(user, info.split("-")[0], info.split("-")[1]);
+			} else if (accion.equals("get")) {
+				return getPokes(info, user);
+			} else if (accion.equals("nuevo")) {
+				return newUser(info);
+			} else {
+				return "error";
+			}
+		} catch (Exception e) {
+			return "error";
 		}
 	}
 
