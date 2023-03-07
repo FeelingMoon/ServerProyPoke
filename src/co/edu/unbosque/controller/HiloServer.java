@@ -31,10 +31,14 @@ public class HiloServer extends Thread {
 		this.vi = new View();
 	}
 
+	public int getPort() {
+		return port;
+	}
+
 	@Override
 	public void run() {
 		String line = "";
-		while (!line.equals("Over")) {
+		while (!line.equals("fin")) {
 			try {
 				this.server = new ServerSocket(this.port);
 				vi.mostrarMensaje("Server started");
@@ -44,6 +48,10 @@ public class HiloServer extends Thread {
 				// takes input from the client socket
 				this.in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 				line = in.readUTF();
+				if (line.equals("Over")) {
+					server.close();
+					continue;
+				}
 				this.socketR = new Socket(this.socket.getInetAddress(), this.port + 1);
 				this.out = new DataOutputStream(socketR.getOutputStream());
 				this.out.writeUTF(user.doAction(line));
@@ -53,11 +61,9 @@ public class HiloServer extends Thread {
 				this.server.close();
 			} catch (IOException i) {
 				vi.mostrarMensaje(i.toString());
-				System.exit(0);
 			}
 		}
 		vi.mostrarMensaje("Closing connection");
-
 		try {
 			socket.close();
 			in.close();
