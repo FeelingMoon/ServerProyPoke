@@ -60,11 +60,20 @@ public class HiloServer extends Thread {
 				this.in.close();
 				this.server.close();
 			} catch (IOException i) {
-				vi.mostrarMensaje(i.toString());
-				try {
-					socket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+				vi.mostrarMensaje(i.getMessage());
+				if (i.getMessage().equals("Connection reset")) {
+					continue;
+				} else if (i.getMessage().equals("Address already in use: bind")) {
+					try {
+						server.close();
+						in.close();
+					} catch (IOException e) {
+						System.out.println("imposible cerrar el server");
+					}
+					continue;
+
+				} else {
+
 				}
 			}
 		}

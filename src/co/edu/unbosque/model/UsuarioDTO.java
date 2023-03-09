@@ -14,9 +14,10 @@ public class UsuarioDTO implements Serializable {
 	public UsuarioDTO(String user) {
 		this.user = user;
 		pokes = new ArrayList<>();
-		for (int i = 0; i < pokes.size(); i++) {
-			pokes.set(i, new ArrayList<>());
+		for (int i = 0; i < 4; i++) {
+			pokes.add(new ArrayList<>());
 		}
+		System.out.println(pokes.size());
 	}
 
 	public String getUser() {
@@ -73,8 +74,8 @@ public class UsuarioDTO implements Serializable {
 				pok.setMote(compMote(mote));
 			}
 			pokes.get(lugar).add(pok);
+			return "logro";
 		}
-		return "error";
 	}
 
 	public String liberarPoke(int lugar, String nombre) {
