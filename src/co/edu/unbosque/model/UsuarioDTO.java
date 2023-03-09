@@ -77,6 +77,7 @@ public class UsuarioDTO implements Serializable {
 			} else {
 				pok.setMote(compMote(mote));
 			}
+			System.out.println(pokemon.toString2());
 			pokes.get(lugar).add(pok);
 			return "logro";
 		}
