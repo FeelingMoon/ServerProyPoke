@@ -138,6 +138,32 @@ public class UsuarioDAO {
 		}
 	}
 
+	public synchronized String getPokeMote(int lugar, String user, String mote) {
+		try {
+			for (int i = 0; i < users.size(); i++) {
+				if (users.get(i).getUser().equals(user)) {
+					ArrayList<PokemonDTO> tmp = users.get(i).getPokemonArray(lugar);
+					for (int j = 0; j < tmp.size(); j++) {
+						if (tmp.get(j).getMote().equals(mote)) {
+							PokemonDTO tmpP = tmp.get(j);
+							String stats = tmpP.toString().split("&")[0];
+							String mov1 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[1])).toString();
+							String mov2 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[2])).toString();
+							String mov3 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[3])).toString();
+							String mov4 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[4])).toString();
+							String info = tmpP.toString().split("&")[5];
+							return stats + "&" + mov1 + "&" + mov2 + "&" + mov3 + "&" + mov4 + "&" + info + "%!%";
+						}
+					}
+					return "NoExist";
+				}
+			}
+			return "error";
+		} catch (Exception e) {
+			return "error";
+		}
+	}
+
 	public synchronized String getPokesConBolsillo(int lugar, String user) {
 		try {
 			ArrayList<PokemonDTO> tmp = null;

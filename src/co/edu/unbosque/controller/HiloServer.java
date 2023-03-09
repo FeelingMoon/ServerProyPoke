@@ -89,6 +89,13 @@ public class HiloServer extends Thread {
 								tmp = Integer.parseInt(info);
 							}
 							res = user.getPokesConBolsillo(tmp, userN);
+						} else if (accion.equals("getMote")) {
+							if (info.split("-")[0].equals("0")) {
+								tmp = 0;
+							} else {
+								tmp = Integer.parseInt(info.split("-")[0]);
+							}
+							res = user.getPokeMote(tmp, userN, info.split("-")[1]);
 						} else {
 							res = "error";
 						}

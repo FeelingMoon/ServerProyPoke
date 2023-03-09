@@ -53,7 +53,7 @@ public class UsuarioDTO implements Serializable {
 				continue;
 			} else {
 				for (int j = 0; j < tmp.size(); j++) {
-					if (tmp.get(i).getMote().equals(mote)) {
+					if (tmp.get(j).getMote().equals(mote)) {
 						return "exist";
 					}
 				}
