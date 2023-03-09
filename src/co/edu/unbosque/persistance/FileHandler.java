@@ -5,6 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
+import co.edu.unbosque.model.UsuarioDTO;
 
 public class FileHandler {
 	private static FileInputStream fis;
@@ -48,10 +51,10 @@ public class FileHandler {
 		return tmp;
 	}
 
-//	public static void main(String[] args) {
-//		ArrayList<UsuarioDTO> user = new ArrayList<>();
-//		user.add(new UsuarioDTO("FeelingMoon"));
-//		user.add(new UsuarioDTO("MikaNiatsu"));
-//		writeSerializable(user, "users.usr");
-//	}
+	public static void main(String[] args) {
+		ArrayList<UsuarioDTO> user = new ArrayList<>();
+		user.add(new UsuarioDTO("FeelingMoon"));
+		user.add(new UsuarioDTO("MikaNiatsu"));
+		writeSerializable(user, "users.usr");
+	}
 }

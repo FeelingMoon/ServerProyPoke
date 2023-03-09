@@ -47,38 +47,56 @@ public class UsuarioDTO implements Serializable {
 	}
 
 	public String compMote(String mote) {
-		int cont = 0;
 		for (int i = 0; i < pokes.size(); i++) {
 			ArrayList<PokemonDTO> tmp = pokes.get(i);
 			if (tmp.size() == 0) {
-				return mote;
+				continue;
 			} else {
 				for (int j = 0; j < tmp.size(); j++) {
-					if (tmp.get(i).getMote().equalsIgnoreCase(mote)) {
+					if (tmp.get(i).getMote().equals(mote)) {
+						return "exist";
+					}
+				}
+			}
+		}
+		return mote;
+	}
+
+	public int contNothing(String nombre) {
+		int cont = 0;
+		for (int i = 0; i < pokes.size(); i++) {
+			ArrayList<PokemonDTO> tmp = pokes.get(i);
+			if (tmp.size() > 0) {
+				for (int j = 0; j < tmp.size(); j++) {
+					if (tmp.get(j).getNom().equals(nombre)) {
 						cont++;
 					}
 				}
 			}
 		}
-		if (cont > 0) {
-			return mote + " " + cont;
-		} else {
-			return mote;
-		}
+		return cont;
 	}
 
 	public String capturarPoke(int lugar, PokemonDTO pokemon, String mote) {
 		if (lugar == 0 && isFullPocket().equals("logro")) {
-			return "error";
+			return "lleno";
 		} else {
-			PokemonDTO pok = pokemon;
 			if (mote.equals("Nothing")) {
-				pok.setMote(compMote(pokemon.getNom()));
+				int cont = contNothing(pokemon.getNom());
+				if (!(cont > 0)) {
+					pokemon.setMote(pokemon.getNom());
+				} else {
+					pokemon.setMote(pokemon.getNom() + " " + cont);
+				}
 			} else {
-				pok.setMote(compMote(mote));
+				String tmp = compMote(mote);
+				if (!tmp.equals("exist")) {
+					pokemon.setMote(compMote(mote));
+				} else {
+					return tmp;
+				}
 			}
-			System.out.println(pokemon.toString2());
-			pokes.get(lugar).add(pok);
+			pokes.get(lugar).add(pokemon);
 			return "logro";
 		}
 	}

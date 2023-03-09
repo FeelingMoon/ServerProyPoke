@@ -19,10 +19,24 @@ public class UsuarioDAO {
 		rand = new Random();
 	}
 
-	public synchronized String newUser(String name) {
-		users.add(new UsuarioDTO(name));
-		FileHandler.writeSerializable(users, "users.usr");
+	public String compUser(String name) {
+		for (int i = 0; i < users.size(); i++) {
+			if (users.get(i).getUser().equals(name)) {
+				return "exist";
+			}
+		}
 		return "logro";
+	}
+
+	public synchronized String newUser(String name) {
+		String tmp = compUser(name);
+		if (tmp.equals("logro")) {
+			users.add(new UsuarioDTO(name));
+			FileHandler.writeSerializable(users, "users.usr");
+			return "logro";
+		} else {
+			return tmp;
+		}
 	}
 
 	public int[] generateMovs() {
@@ -57,7 +71,6 @@ public class UsuarioDAO {
 			tmp.setMov2(mov[1]);
 			tmp.setMov3(mov[2]);
 			tmp.setMov4(mov[3]);
-			tmp.setMote(mote);
 			for (int i = 0; i < users.size(); i++) {
 				if (users.get(i).getUser().equals(user)) {
 					String tmpS = users.get(i).capturarPoke(lugar, tmp, mote);
@@ -114,7 +127,6 @@ public class UsuarioDAO {
 						String mov3 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[3])).toString();
 						String mov4 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[4])).toString();
 						String info = tmpP.toString().split("&")[5];
-						System.out.println(info);
 						tmpS += stats + "&" + mov1 + "&" + mov2 + "&" + mov3 + "&" + mov4 + "&" + info + "%!%";
 					}
 					return tmpS;
