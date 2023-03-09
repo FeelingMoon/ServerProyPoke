@@ -82,6 +82,13 @@ public class HiloServer extends Thread {
 							res = user.getPokes(tmp, userN);
 						} else if (accion.equals("nuevo")) {
 							res = user.newUser(info);
+						} else if (accion.equals("getCB")) {
+							if (info.equals("0")) {
+								tmp = 0;
+							} else {
+								tmp = Integer.parseInt(info);
+							}
+							res = user.getPokesConBolsillo(tmp, userN);
 						} else {
 							res = "error";
 						}
