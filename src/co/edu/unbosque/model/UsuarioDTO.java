@@ -50,9 +50,13 @@ public class UsuarioDTO implements Serializable {
 		int cont = 0;
 		for (int i = 0; i < pokes.size(); i++) {
 			ArrayList<PokemonDTO> tmp = pokes.get(i);
-			for (int j = 0; j < tmp.size(); j++) {
-				if (tmp.get(i).getMote().equalsIgnoreCase(mote)) {
-					cont++;
+			if (tmp.size() == 0) {
+				return mote;
+			} else {
+				for (int j = 0; j < tmp.size(); j++) {
+					if (tmp.get(i).getMote().equalsIgnoreCase(mote)) {
+						cont++;
+					}
 				}
 			}
 		}
