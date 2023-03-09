@@ -47,4 +47,11 @@ public class FileHandler {
 		}
 		return tmp;
 	}
+
+//	public static void main(String[] args) {
+//		ArrayList<UsuarioDTO> user = new ArrayList<>();
+//		user.add(new UsuarioDTO("FeelingMoon"));
+//		user.add(new UsuarioDTO("MikaNiatsu"));
+//		writeSerializable(user, "users.usr");
+//	}
 }
