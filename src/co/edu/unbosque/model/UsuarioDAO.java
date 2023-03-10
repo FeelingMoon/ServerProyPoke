@@ -19,10 +19,24 @@ public class UsuarioDAO {
 		rand = new Random();
 	}
 
-	public String newUser(String name) {
-		users.add(new UsuarioDTO(name));
-		FileHandler.writeSerializable(users, "users.usr");
+	public String compUser(String name) {
+		for (int i = 0; i < users.size(); i++) {
+			if (users.get(i).getUser().equals(name)) {
+				return "exist";
+			}
+		}
 		return "logro";
+	}
+
+	public synchronized String newUser(String name) {
+		String tmp = compUser(name);
+		if (tmp.equals("logro")) {
+			users.add(new UsuarioDTO(name));
+			FileHandler.writeSerializable(users, "users.usr");
+			return "logro";
+		} else {
+			return tmp;
+		}
 	}
 
 	public int[] generateMovs() {
@@ -49,7 +63,7 @@ public class UsuarioDAO {
 		return tmp;
 	}
 
-	public String captuPoke(String num, String mote, String user, int lugar) {
+	public synchronized String captuPoke(String num, String mote, String user, int lugar) {
 		try {
 			PokemonDTO tmp = pokes.getPoke(Integer.parseInt(num));
 			int[] mov = generateMovs();
@@ -57,7 +71,6 @@ public class UsuarioDAO {
 			tmp.setMov2(mov[1]);
 			tmp.setMov3(mov[2]);
 			tmp.setMov4(mov[3]);
-			tmp.setMote(mote);
 			for (int i = 0; i < users.size(); i++) {
 				if (users.get(i).getUser().equals(user)) {
 					String tmpS = users.get(i).capturarPoke(lugar, tmp, mote);
@@ -72,7 +85,7 @@ public class UsuarioDAO {
 		}
 	}
 
-	public String liberarPoke(String user, int lugar, String mote) {
+	public synchronized String liberarPoke(String user, int lugar, String mote) {
 		try {
 			for (int i = 0; i < users.size(); i++) {
 				if (users.get(i).getUser().equals(user)) {
@@ -89,7 +102,7 @@ public class UsuarioDAO {
 
 	// separacion linea "&%&"
 
-	public String getAllPokes() {
+	public synchronized String getAllPokes() {
 		ArrayList<PokemonDTO> tmp = pokes.getArrayList();
 		String tmpS = "";
 		for (int i = 0; i < tmp.size(); i++) {
@@ -98,25 +111,23 @@ public class UsuarioDAO {
 		return tmpS;
 	}
 
-	public String getPokes(int lugar, String user) {
+	public synchronized String getPokes(int lugar, String user) {
 		try {
 			ArrayList<PokemonDTO> tmp = null;
-			String tmpS = "";
+			String tmpS;
 			for (int i = 0; i < users.size(); i++) {
 				if (users.get(i).getUser().equals(user)) {
+					tmpS = "";
 					tmp = users.get(i).getPokemonArray(lugar);
 					for (int j = 0; j < tmp.size(); j++) {
-						PokemonDTO tmpP = tmp.get(i);
+						PokemonDTO tmpP = tmp.get(j);
 						String stats = tmpP.toString().split("&")[0];
-						System.out.println(stats);
 						String mov1 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[1])).toString();
-						System.out.println(mov1);
 						String mov2 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[2])).toString();
-						System.out.println(mov2);
 						String mov3 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[3])).toString();
 						String mov4 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[4])).toString();
 						String info = tmpP.toString().split("&")[5];
-						tmpS += stats + "&" + mov1 + "&" + mov2 + "&" + mov3 + "&" + mov4 + "&" + info + "%";
+						tmpS += stats + "&" + mov1 + "&" + mov2 + "&" + mov3 + "&" + mov4 + "&" + info + "%!%";
 					}
 					return tmpS;
 				}
@@ -127,7 +138,74 @@ public class UsuarioDAO {
 		}
 	}
 
-	public String inicioUser(String user) {
+	public synchronized String getPokeMote(int lugar, String user, String mote) {
+		try {
+			for (int i = 0; i < users.size(); i++) {
+				if (users.get(i).getUser().equals(user)) {
+					ArrayList<PokemonDTO> tmp = users.get(i).getPokemonArray(lugar);
+					for (int j = 0; j < tmp.size(); j++) {
+						if (tmp.get(j).getMote().equals(mote)) {
+							PokemonDTO tmpP = tmp.get(j);
+							String stats = tmpP.toString().split("&")[0];
+							String mov1 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[1])).toString();
+							String mov2 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[2])).toString();
+							String mov3 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[3])).toString();
+							String mov4 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[4])).toString();
+							String info = tmpP.toString().split("&")[5];
+							return stats + "&" + mov1 + "&" + mov2 + "&" + mov3 + "&" + mov4 + "&" + info + "%!%";
+						}
+					}
+					return "NoExist";
+				}
+			}
+			return "error";
+		} catch (Exception e) {
+			return "error";
+		}
+	}
+
+	public synchronized String getPokesConBolsillo(int lugar, String user) {
+		try {
+			ArrayList<PokemonDTO> tmp = null;
+			String tmpS;
+			for (int i = 0; i < users.size(); i++) {
+				if (users.get(i).getUser().equals(user)) {
+					tmpS = "";
+					tmp = users.get(i).getPokemonArray(0);
+					for (int j = 0; j < tmp.size(); j++) {
+						PokemonDTO tmpP = tmp.get(j);
+						String stats = tmpP.toString().split("&")[0];
+						String mov1 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[1])).toString();
+						String mov2 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[2])).toString();
+						String mov3 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[3])).toString();
+						String mov4 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[4])).toString();
+						String info = tmpP.toString().split("&")[5];
+						System.out.println(info);
+						tmpS += stats + "&" + mov1 + "&" + mov2 + "&" + mov3 + "&" + mov4 + "&" + info + "%!%";
+					}
+					tmpS += "@";
+					tmp = users.get(i).getPokemonArray(lugar);
+					for (int j = 0; j < tmp.size(); j++) {
+						PokemonDTO tmpP = tmp.get(j);
+						String stats = tmpP.toString().split("&")[0];
+						String mov1 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[1])).toString();
+						String mov2 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[2])).toString();
+						String mov3 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[3])).toString();
+						String mov4 = movs.getMov(Integer.parseInt(tmpP.toString().split("&")[4])).toString();
+						String info = tmpP.toString().split("&")[5];
+						System.out.println(info);
+						tmpS += stats + "&" + mov1 + "&" + mov2 + "&" + mov3 + "&" + mov4 + "&" + info + "%!%";
+					}
+					return tmpS;
+				}
+			}
+			return "error";
+		} catch (Exception e) {
+			return "error";
+		}
+	}
+
+	public synchronized String inicioUser(String user) {
 		for (UsuarioDTO us : users) {
 			if (us.getUser().equals(user)) {
 				return "logro";
@@ -136,42 +214,18 @@ public class UsuarioDAO {
 		return "error";
 	}
 
-	// separacion "@"
-	public synchronized String doAction(String mensaje) {
+	public synchronized String movePoke(String user, int lugarIni, int lugarFin, String mote) {
 		try {
-			int tmp = 0;
-			String accion = mensaje.split("@")[0].split("-")[1], user = mensaje.split("@")[0].split("-")[0];
-			String info = mensaje.split("@")[1];
-			if (accion.equals("iniciar")) {
-				return inicioUser(user);
-			} else if (accion.equals("getAll")) {
-				return getAllPokes();
-			} else if (accion.equals("capturar")) {
-				if (info.split("-")[2].equals("0")) {
-					tmp = 0;
-				} else {
-					tmp = Integer.parseInt(info.split("-")[2]);
-				}
-				return captuPoke(info.split("-")[0], info.split("-")[1], user, tmp);
-			} else if (accion.equals("liberar")) {
-				if (info.split("-")[0].equals("0")) {
-					tmp = 0;
-				} else {
-					tmp = Integer.parseInt(info.split("-")[0]);
-				}
-				return liberarPoke(user, tmp, info.split("-")[1]);
-			} else if (accion.equals("get")) {
-				if (info.equals("0")) {
-					tmp = 0;
-				} else {
-					tmp = Integer.parseInt(info);
-				}
-				return getPokes(tmp, user);
-			} else if (accion.equals("nuevo")) {
-				return newUser(info);
-			} else {
+			if (lugarFin == lugarIni) {
 				return "error";
+			} else {
+				for (int i = 0; i < users.size(); i++) {
+					if (users.get(i).getUser().equals(user)) {
+						return users.get(i).moverPoke(lugarIni, lugarFin, mote);
+					}
+				}
 			}
+			return "error";
 		} catch (Exception e) {
 			return "error";
 		}
