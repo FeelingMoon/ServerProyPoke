@@ -5,15 +5,25 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
-import co.edu.unbosque.model.UsuarioDTO;
-
+/**
+ * 
+ * @author JohanSilva
+ * @author MiguelLinares
+ *
+ */
 public class FileHandler {
 	private static FileInputStream fis;
 	private static ObjectInputStream ois;
 	private static FileOutputStream fos;
 	private static ObjectOutputStream oos;
+
+	/**
+	 * Method in charge of serializing an object
+	 * 
+	 * @param o   object to serialize
+	 * @param url where the file is located where it will be written
+	 */
 
 	public static void writeSerializable(Object o, String url) {
 		try {
@@ -33,6 +43,13 @@ public class FileHandler {
 		}
 	}
 
+	/**
+	 * Method responsible for loading serialized objects
+	 * 
+	 * @param url Where the file to read is located
+	 * @return Returns the object read
+	 */
+
 	public static Object loadSerializable(String url) {
 		Object tmp = null;
 		try {
@@ -51,10 +68,10 @@ public class FileHandler {
 		return tmp;
 	}
 
-	public static void main(String[] args) {
-		ArrayList<UsuarioDTO> user = new ArrayList<>();
-		user.add(new UsuarioDTO("FeelingMoon"));
-		user.add(new UsuarioDTO("MikaNiatsu"));
-		writeSerializable(user, "users.usr");
-	}
+//	public static void main(String[] args) {
+//		ArrayList<UsuarioDTO> user = new ArrayList<>();
+//		user.add(new UsuarioDTO("FeelingMoon"));
+//		user.add(new UsuarioDTO("MikaNiatsu"));
+//		writeSerializable(user, "users.usr");
+//	}
 }

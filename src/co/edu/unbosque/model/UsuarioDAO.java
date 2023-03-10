@@ -197,7 +197,7 @@ public class UsuarioDAO {
 	 * @param lugar Where is the pokemon located?
 	 * @param user  User who wants to do the action
 	 * @param mote  pokemon nickname
-	 * @return
+	 * @return Returns the information of the pokemon
 	 */
 	public synchronized String getPokeMote(int lugar, String user, String mote) {
 		try {
@@ -224,6 +224,14 @@ public class UsuarioDAO {
 			return "error";
 		}
 	}
+
+	/**
+	 * Method in charge of obtaining a box of pokemons next to the pocket
+	 * 
+	 * @param lugar The box you want to get
+	 * @param user  User requesting the action
+	 * @return User requesting the action
+	 */
 
 	public synchronized String getPokesConBolsillo(int lugar, String user) {
 		try {
@@ -266,6 +274,12 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Method in charge of verifying if the user exists
+	 * 
+	 * @param user User requesting the action
+	 * @return Returns whether or not it exists
+	 */
 	public synchronized String inicioUser(String user) {
 		for (UsuarioDTO us : users) {
 			if (us.getUser().equals(user)) {
@@ -275,6 +289,15 @@ public class UsuarioDAO {
 		return "error";
 	}
 
+	/**
+	 * Method in charge of moving a pokemon between boxes and pocket
+	 * 
+	 * @param user     User requesting the action
+	 * @param lugarIni Place where the pokemon is initially
+	 * @param lugarFin Where the pokemon will move to
+	 * @param mote     pokemon nickname
+	 * @return
+	 */
 	public synchronized String movePoke(String user, int lugarIni, int lugarFin, String mote) {
 		try {
 			if (lugarFin == lugarIni) {
