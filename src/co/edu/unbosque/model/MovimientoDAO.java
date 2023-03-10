@@ -5,8 +5,6 @@ import java.util.ArrayList;
 /**
  * @author MiguelLinares
  * @author JohanSilva
- * @author MiguelRamirez
- * @author HaroldDuarte
  */
 
 public class MovimientoDAO {
