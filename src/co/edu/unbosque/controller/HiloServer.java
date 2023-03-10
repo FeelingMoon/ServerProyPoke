@@ -10,6 +10,14 @@ import java.net.Socket;
 import co.edu.unbosque.model.UsuarioDAO;
 import co.edu.unbosque.view.View;
 
+/**
+ * Class where the server actions are done
+ * 
+ * @author JohanSilva
+ * @author MiguelLinares
+ *
+ */
+
 public class HiloServer extends Thread {
 	private Socket socket;
 	private Socket socketR;
@@ -21,6 +29,12 @@ public class HiloServer extends Thread {
 	private View vi;
 	private String res;
 
+	/**
+	 * Constructor method
+	 * 
+	 * @param port Port to open
+	 * @param user List of users to manage
+	 */
 	public HiloServer(int port, UsuarioDAO user) {
 		this.user = user;
 		this.socket = null;
@@ -31,10 +45,6 @@ public class HiloServer extends Thread {
 		this.port = port;
 		this.vi = new View();
 		this.res = "";
-	}
-
-	public int getPort() {
-		return port;
 	}
 
 	@Override

@@ -2,6 +2,14 @@ package co.edu.unbosque.controller;
 
 import co.edu.unbosque.model.UsuarioDAO;
 
+/**
+ * Class where the server thread starts
+ * 
+ * @author JohanSilva
+ * @author MiguelLinares
+ *
+ */
+
 public class Controller {
 	private UsuarioDAO user;
 	private HiloServer[] servers;

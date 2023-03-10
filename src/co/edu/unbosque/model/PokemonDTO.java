@@ -5,8 +5,6 @@ import java.io.Serializable;
 /**
  * @author MiguelLinares
  * @author JohanSilva
- * @author MiguelRamirez
- * @author HaroldDuarte
  */
 @SuppressWarnings("serial")
 public class PokemonDTO implements Serializable {
@@ -456,6 +454,12 @@ public class PokemonDTO implements Serializable {
 				+ "-" + hab1 + "-" + hab2 + "-" + hab3 + "-" + gif + "-" + wav;
 	}
 
+	/**
+	 * Method in charge of returning a string with the information shorter than the
+	 * toString
+	 * 
+	 * @return String with the information of the pokemon trimmed
+	 */
 	public String toString2() {
 		return num + "-" + nom + "-" + type1 + "-" + type2 + "-" + gif + "-" + wav;
 	}

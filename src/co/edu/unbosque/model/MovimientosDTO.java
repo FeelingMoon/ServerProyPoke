@@ -5,8 +5,6 @@ import java.io.Serializable;
 /**
  * @author MiguelLinares
  * @author JohanSilva
- * @author MiguelRamirez
- * @author HaroldDuarte
  */
 @SuppressWarnings("serial")
 public class MovimientosDTO implements Serializable {

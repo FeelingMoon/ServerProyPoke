@@ -78,25 +78,35 @@ public class UsuarioDTO implements Serializable {
 	}
 
 	public String capturarPoke(int lugar, PokemonDTO pokemon, String mote) {
+		int cont = 0;
+		String tmp = "";
 		if (lugar == 0 && isFullPocket().equals("logro")) {
 			return "lleno";
 		} else {
 			if (mote.equals("Nothing")) {
-				int cont = contNothing(pokemon.getNom());
+				cont = contNothing(pokemon.getNom());
 				if (!(cont > 0)) {
-					pokemon.setMote(pokemon.getNom());
+					tmp = pokemon.getNom();
 				} else {
-					pokemon.setMote(pokemon.getNom() + " " + cont);
+					tmp = pokemon.getNom() + " " + cont;
 				}
 			} else {
-				String tmp = compMote(mote);
+				tmp = compMote(mote);
 				if (!tmp.equals("exist")) {
-					pokemon.setMote(compMote(mote));
+					tmp = compMote(mote);
 				} else {
 					return tmp;
 				}
 			}
-			pokes.get(lugar).add(pokemon);
+			pokes.get(lugar)
+					.add(new PokemonDTO(pokemon.getNum(), pokemon.getHp(), pokemon.getAttack(), pokemon.getDefense(),
+							pokemon.getSpAtk(), pokemon.getSpDef(), pokemon.getSpeed(), pokemon.getMov1(),
+							pokemon.getMov2(), pokemon.getMov3(), pokemon.getMov4(), tmp, pokemon.getNom(),
+							pokemon.getType1(), pokemon.getType2(), pokemon.getDesc(), pokemon.getHab1(),
+							pokemon.getHab2(), pokemon.getHab3(), pokemon.getGif(), pokemon.getWav()));
+			for (int i = 0; i < pokes.get(lugar).size(); i++) {
+				System.out.println(pokes.get(lugar).get(i).getMote());
+			}
 			return "logro";
 		}
 	}

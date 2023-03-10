@@ -5,12 +5,21 @@ import java.util.Random;
 
 import co.edu.unbosque.persistance.FileHandler;
 
+/**
+ * 
+ * @author JohanSilva
+ * @author MiguelLinares
+ *
+ */
 public class UsuarioDAO {
 	private PokemonDAO pokes;
 	private MovimientoDAO movs;
 	private ArrayList<UsuarioDTO> users;
 	private Random rand;
 
+	/**
+	 * Constructor method
+	 */
 	@SuppressWarnings("unchecked")
 	public UsuarioDAO() {
 		pokes = new PokemonDAO((ArrayList<PokemonDTO>) FileHandler.loadSerializable("pokemon.pokes"));
@@ -19,6 +28,12 @@ public class UsuarioDAO {
 		rand = new Random();
 	}
 
+	/**
+	 * Method in charge of checking if a user exists
+	 * 
+	 * @param name Username to check
+	 * @return If it exists it returns the check
+	 */
 	public String compUser(String name) {
 		for (int i = 0; i < users.size(); i++) {
 			if (users.get(i).getUser().equals(name)) {
@@ -28,6 +43,12 @@ public class UsuarioDAO {
 		return "logro";
 	}
 
+	/**
+	 * Method in charge of adding a new user
+	 * 
+	 * @param name Name of the new user to add
+	 * @return Returns if it was able to add the new user
+	 */
 	public synchronized String newUser(String name) {
 		String tmp = compUser(name);
 		if (tmp.equals("logro")) {
@@ -39,6 +60,11 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Method in charge of randomly generating 4 numbers that will be the movements
+	 * 
+	 * @return Returns a list with the four numbers of the movements
+	 */
 	public int[] generateMovs() {
 		int[] tmp = new int[4];
 		boolean conf = true;
@@ -63,6 +89,15 @@ public class UsuarioDAO {
 		return tmp;
 	}
 
+	/**
+	 * Method in charge of capturing a pokemon
+	 * 
+	 * @param num   Number of the pokedex that corresponds to the pokemon
+	 * @param mote  Nickname that you want to assign to the pokemon
+	 * @param user  User who wants to capture the pokemon
+	 * @param lugar Where you want to save it
+	 * @return Returns whether or not he was able to save the pokemon
+	 */
 	public synchronized String captuPoke(String num, String mote, String user, int lugar) {
 		try {
 			PokemonDTO tmp = pokes.getPoke(Integer.parseInt(num));
@@ -85,6 +120,14 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Method in charge of releasing a pokemon
+	 * 
+	 * @param user  User who wants to release the pokemon
+	 * @param lugar Where the pokemon is
+	 * @param mote  Pokemon nickname
+	 * @return Returns whether or not it was able to release the pokemon
+	 */
 	public synchronized String liberarPoke(String user, int lugar, String mote) {
 		try {
 			for (int i = 0; i < users.size(); i++) {
@@ -100,8 +143,11 @@ public class UsuarioDAO {
 		}
 	}
 
-	// separacion linea "&%&"
-
+	/**
+	 * Method in charge of obtaining all the pokemons of the pokedex
+	 * 
+	 * @return Text that contains all the information in a specified format
+	 */
 	public synchronized String getAllPokes() {
 		ArrayList<PokemonDTO> tmp = pokes.getArrayList();
 		String tmpS = "";
@@ -111,6 +157,13 @@ public class UsuarioDAO {
 		return tmpS;
 	}
 
+	/**
+	 * Method in charge of obtaining the pokemons that a user has per place
+	 * 
+	 * @param lugar Place which you want to get
+	 * @param user  User who wants to do the action
+	 * @return Returns the list of pokemons with a specific format
+	 */
 	public synchronized String getPokes(int lugar, String user) {
 		try {
 			ArrayList<PokemonDTO> tmp = null;
@@ -138,6 +191,14 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Gets a pokemon by the nickname
+	 * 
+	 * @param lugar Where is the pokemon located?
+	 * @param user  User who wants to do the action
+	 * @param mote  pokemon nickname
+	 * @return
+	 */
 	public synchronized String getPokeMote(int lugar, String user, String mote) {
 		try {
 			for (int i = 0; i < users.size(); i++) {
