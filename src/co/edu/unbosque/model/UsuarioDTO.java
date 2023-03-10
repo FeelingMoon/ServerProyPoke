@@ -112,6 +112,21 @@ public class UsuarioDTO implements Serializable {
 		return "error";
 	}
 
+	public String moverPoke(int lugarIni, int lugarFin, String mote) {
+		if (lugarFin == 0 && isFullPocket().equals("logro")) {
+			return "lleno";
+		} else {
+			ArrayList<PokemonDTO> tmp = pokes.get(lugarIni);
+			for (int i = 0; i < tmp.size(); i++) {
+				if (tmp.get(i).getMote().equals(mote)) {
+					pokes.get(lugarFin).add(pokes.get(lugarIni).remove(i));
+					return "logro";
+				}
+			}
+			return "error";
+		}
+	}
+
 	public ArrayList<PokemonDTO> getPokemonArray(int lugar) {
 		return pokes.get(lugar);
 	}

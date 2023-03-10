@@ -214,6 +214,23 @@ public class UsuarioDAO {
 		return "error";
 	}
 
+	public synchronized String movePoke(String user, int lugarIni, int lugarFin, String mote) {
+		try {
+			if (lugarFin == lugarIni) {
+				return "error";
+			} else {
+				for (int i = 0; i < users.size(); i++) {
+					if (users.get(i).getUser().equals(user)) {
+						return users.get(i).moverPoke(lugarIni, lugarFin, mote);
+					}
+				}
+			}
+			return "error";
+		} catch (Exception e) {
+			return "error";
+		}
+	}
+
 //	public static void main(String[] args) {
 //		@SuppressWarnings("unchecked")
 //		ArrayList<UsuarioDTO> user = (ArrayList<UsuarioDTO>) FileHandler.loadSerializable("users.usr");

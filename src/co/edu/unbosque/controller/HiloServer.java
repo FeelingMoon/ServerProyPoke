@@ -96,6 +96,19 @@ public class HiloServer extends Thread {
 								tmp = Integer.parseInt(info.split("-")[0]);
 							}
 							res = user.getPokeMote(tmp, userN, info.split("-")[1]);
+						} else if (accion.equals("mover")) {
+							int tmpF = 0;
+							if (info.split("-")[0].equals("0")) {
+								tmp = 0;
+							} else {
+								tmp = Integer.parseInt(info.split("-")[0]);
+							}
+							if (info.split("-")[1].equals("0")) {
+								tmpF = 0;
+							} else {
+								tmpF = Integer.parseInt(info.split("-")[1]);
+							}
+							res = user.movePoke(userN, tmp, tmpF, info.split("-")[2]);
 						} else {
 							res = "error";
 						}
