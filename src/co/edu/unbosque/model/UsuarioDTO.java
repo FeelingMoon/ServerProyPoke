@@ -2,6 +2,7 @@ package co.edu.unbosque.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 
 @SuppressWarnings("serial")
 public class UsuarioDTO implements Serializable {
@@ -64,14 +65,27 @@ public class UsuarioDTO implements Serializable {
 
 	public int contNothing(String nombre) {
 		int cont = 0;
+		ArrayList<Integer> nums = new ArrayList<>();
 		for (int i = 0; i < pokes.size(); i++) {
 			ArrayList<PokemonDTO> tmp = pokes.get(i);
 			if (tmp.size() > 0) {
 				for (int j = 0; j < tmp.size(); j++) {
 					if (tmp.get(j).getNom().equals(nombre)) {
-						cont++;
+						if (!tmp.get(j).getMote().equals(nombre)) {
+							nums.add(Integer.parseInt(tmp.get(j).getMote().split("_")[1]));
+						} else {
+							nums.add(0);
+						}
 					}
 				}
+			}
+		}
+		Collections.sort(nums);
+		for (int i = 0; i < nums.size(); i++) {
+			if (nums.get(i) == cont) {
+				cont++;
+			} else {
+				return cont;
 			}
 		}
 		return cont;
@@ -88,7 +102,7 @@ public class UsuarioDTO implements Serializable {
 				if (!(cont > 0)) {
 					tmp = pokemon.getNom();
 				} else {
-					tmp = pokemon.getNom() + " " + cont;
+					tmp = pokemon.getNom() + "_" + cont;
 				}
 			} else {
 				tmp = compMote(mote);
@@ -104,9 +118,6 @@ public class UsuarioDTO implements Serializable {
 							pokemon.getMov2(), pokemon.getMov3(), pokemon.getMov4(), tmp, pokemon.getNom(),
 							pokemon.getType1(), pokemon.getType2(), pokemon.getDesc(), pokemon.getHab1(),
 							pokemon.getHab2(), pokemon.getHab3(), pokemon.getGif(), pokemon.getWav()));
-			for (int i = 0; i < pokes.get(lugar).size(); i++) {
-				System.out.println(pokes.get(lugar).get(i).getMote());
-			}
 			return "logro";
 		}
 	}
